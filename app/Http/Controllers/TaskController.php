@@ -23,7 +23,7 @@ class TaskController extends Controller
             'customer_name' => $request->customer_name,
             'printing' => false,
             'delivered' => false,
-            'do_number' => '',
+            'do_number' => 'N/A',
             'user_id' => Auth::user()->id,
             'printing_by' => null,
             'delivered_by' => null
@@ -93,5 +93,13 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $task->delete();
         return redirect('/tasks');
+    }
+
+    public function deleteMoreThan7Days()
+    {
+        $task = Task::whereDate('updated_at', '<=', now()->subDays(7)->setTime(0, 0, 0)->toDateTimeString())
+            ->where('delivered', 1)->delete();
+
+        return response()->json($task);
     }
 }

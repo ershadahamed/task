@@ -25,6 +25,7 @@
         "datatables.net-buttons-bs5": "^2.2.3",
         "datatables.net-responsive-bs5": "^2.3.0",
         "jquery": "^3.6.0",
+        "jquery-datetimepicker": "^2.5.21",
         "jszip": "^3.10.0",
         "pdfmake": "^0.2.5"
     }

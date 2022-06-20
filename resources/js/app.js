@@ -13,3 +13,6 @@ require( 'datatables.net-buttons/js/buttons.colVis.js' );
 require( 'datatables.net-buttons/js/buttons.html5.js' );
 require( 'datatables.net-buttons/js/buttons.print.js' );
 require( 'datatables.net-responsive-bs5' );
+
+// jQuery datetime picker
+require( 'jquery-datetimepicker/build/jquery.datetimepicker.full' );
