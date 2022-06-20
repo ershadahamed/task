@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -70,6 +70,7 @@
                                     <option value="admin">Admin</option>
                                     <option value="ctp">CTP</option>
                                     <option value="logistic">Logistic</option>
+                                    <option value="view">View</option>
                                 </select>
                             </div>
                         </div>
@@ -82,9 +83,52 @@
                             </div>
                         </div>
                     </form>
+
+                    <div class="row mt-4">
+                        <div class="col">
+                            <table class="table table-sm table-bordered table-striped users">
+                                <thead>
+                                    <tr class="bg-dark text-white">
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $counter = 1;
+                                    @endphp
+
+                                    @foreach($users as $user)
+                                        <tr>
+                                            <td>{{ $counter++ }}</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>
+                                                @foreach($user->getRoleNames() as $role)
+                                                    {{ $role }}
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.users').DataTable({
+                responsive: true
+            });
+        });
+    </script>
 @endsection

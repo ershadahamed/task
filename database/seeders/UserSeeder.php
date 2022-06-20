@@ -27,6 +27,7 @@ class UserSeeder extends Seeder
         $role_1 = Role::create(['name' => 'admin']);
         $role_2 = Role::create(['name' => 'ctp']);
         $role_3 = Role::create(['name' => 'logistic']);
+        $role_4 = Role::create(['name' => 'view']);
 
         $permission_1 = Permission::create(['name' => 'create']);
         $permission_2 = Permission::create(['name' => 'delete']);
@@ -36,6 +37,7 @@ class UserSeeder extends Seeder
         // $role_2->syncPermissions([$permission_1, $permission_2, $permission_3, $permission_4]);
         $role_2->syncPermissions([$permission_1, $permission_2, $permission_3, $permission_4]);
         $role_3->syncPermissions([$permission_1, $permission_2, $permission_3, $permission_4]);
+        $role_4->syncPermissions([$permission_1, $permission_2, $permission_3, $permission_4]);
 
         $user->assignRole($role_1);
     }

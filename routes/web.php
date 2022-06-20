@@ -34,6 +34,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/tasks', [TaskController::class, 'store'])->name('task.store');
         Route::post('/update/do', [TaskController::class, 'updateDo'])->name('update.do');
         Route::post('/task/printing', [TaskController::class, 'printing'])->name('task.printing');
+        Route::post('/edit/do', [TaskController::class, 'editDo'])->name('edit.do');
+        Route::post('/edit/customer_name', [TaskController::class, 'editCustomerName'])->name('update.customer_name');
+        Route::get('/task/destroy/{id}', [TaskController::class, 'destroy']);
     });
 
     Route::group(['middleware' => ['role:admin|logistic']], function () {

@@ -23,6 +23,7 @@ class TaskController extends Controller
             'customer_name' => $request->customer_name,
             'printing' => false,
             'delivered' => false,
+            'do_number' => '',
             'user_id' => Auth::user()->id,
             'printing_by' => null,
             'delivered_by' => null
@@ -43,7 +44,7 @@ class TaskController extends Controller
         $task->user_id = Auth::user()->id;
         $task->save();
 
-        return back()->with('status', 'Successfully updated do number');
+        return back()->with('status', 'Successfully submitted DO number');
     }
 
     public function printing(Request $r)
@@ -74,5 +75,23 @@ class TaskController extends Controller
     public function completed()
     {
         return view('completed')->with('tasks', Task::where('delivered', 1)->get());
+    }
+
+    public function editCustomerName(Request $r)
+    {
+
+        $task = Task::find($r->task_id);
+        $task->customer_name = $r->customer_name;
+        $task->user_id = Auth::user()->id;
+        $task->save();
+
+        return back()->with('status', 'Successfully updated customer name');
+    }
+
+    public function destroy($id)
+    {
+        $task = Task::findOrFail($id);
+        $task->delete();
+        return redirect('/tasks');
     }
 }

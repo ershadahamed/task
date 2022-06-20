@@ -14,14 +14,27 @@
         border-radius: 0px;
     }
 
+    .pull-right {
+        padding-right: 5px;
+    }
+
+    .pull-right:hover {
+        cursor: pointer;
+    }
+
     .customer_name {
         width: 50%;
         padding-left: 5px;
     }
+
+    .buttonDelete {
+        color: red;
+        cursor: pointer;
+    }
 </style>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Tasks</div>
 
@@ -44,7 +57,7 @@
 
                         @hasanyrole('admin|ctp')
                             <div class="row mb-5">
-                                <div class="col">
+                                <div class="col-sm-6">
                                     <form action="{{ route('task.store') }}" method="POST">
                                         @csrf
 
@@ -71,6 +84,7 @@
                                         <td>Cust. Name</td>
                                         <td>Printing</td>
                                         <td>Delivered</td>
+                                        <td>Delete</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -78,34 +92,54 @@
                                         <tr>
                                             <td>{!! date('d/m/y H:i A', strtotime($task->created_at)) !!}</td>
                                             <td>
-                                                @if ($task->do_number == null)
-                                                    @hasanyrole('admin|ctp')
-                                                        <form action="{{ route('update.do') }}" method="POST">
-                                                            @csrf
-                                                            <div class="input-group">
-                                                                <input type="text" class="do_number" name="do_number" required>
-                                                                <input type="hidden" name="task_id" value="{{ $task->id }}">
-                                                                <div class="input-group-prepend">
-                                                                    <button class="btn btn-sm btn-warning">Update</button>
-                                                                </div>
+                                                @hasanyrole('admin|ctp')
+                                                    <form action="{{ route('update.do') }}" method="POST">
+                                                        @csrf
+                                                        <div class="input-group">
+                                                            <input type="text" class="do_number" name="do_number" value="{{ $task->do_number }}" required>
+                                                            <input type="hidden" name="task_id" value="{{ $task->id }}">
+                                                            <div class="input-group-prepend">
+                                                                <button class="btn btn-sm btn-warning">Update</button>
                                                             </div>
-                                                        </form>
-                                                    @endhasanyrole
-                                                @else
-                                                    {{ $task->do_number }}
-                                                @endif
+
+                                                        </div>
+                                                    </form>
+                                                @endhasanyrole
                                             </td>
-                                            <td>{{ $task->customer_name }}</td>
+                                            <td>
+                                                @hasanyrole('admin|ctp')
+                                                    <form action="{{ route('update.customer_name') }}" method="POST">
+                                                        @csrf
+                                                        <div class="input-group">
+                                                            <input type="text" class="customer_name" name="customer_name" value="{{ $task->customer_name }}" required>
+                                                            <input type="hidden" name="task_id" value="{{ $task->id }}">
+                                                            <div class="input-group-prepend">
+                                                                <button class="btn btn-sm btn-warning">Update</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </form>
+                                                @endhasanyrole
+                                            </td>
                                             <td>
                                                 <input type="checkbox" name="printing"
                                                     {{ $task->printing ? 'checked' : '' }} class="printing"
-                                                    data-ids="{{ $task->id }}" @hasanyrole('logistic') disabled @endhasanyrole >
+                                                    data-ids="{{ $task->id }}" @hasanyrole('logistic|view') disabled @endhasanyrole >
                                             </td>
                                             <td>
                                                 <input type="checkbox" name="delivered"
                                                     {{ $task->delivered ? 'checked' : '' }} class="delivered"
                                                     data-ids="{{ $task->id }}"
-                                                    {{ $task->printing ? '' : 'disabled' }} @hasanyrole('ctp') disabled @endhasanyrole>
+                                                    @if ($task->printing == true && $task->do_number != null)
+                                                    @else 
+                                                    disabled
+                                                    @endif
+                                                    @hasanyrole('ctp|view') disabled @endhasanyrole>
+                                            </td>
+                                            <td>
+                                                @hasanyrole('admin|ctp')
+                                                <a href="task/destroy/{{$task->id}}" onclick="return confirm('Delete {{$task->customer_name}} namecard permanently?')" class="buttonDelete"><i class="fa fa-trash"></i></a>
+                                                @endhasanyrole
                                             </td>
                                         </tr>
                                     @endforeach
@@ -125,13 +159,15 @@
             $('#tasklist').DataTable({
                 responsive: true
             });
+
+            
         });
 
         $(".printing").change(function() {
             let id = $(this).attr("data-ids");
             if (this.checked) {
                 $.post('{{ route("task.printing") }}', {
-                    doChecked: true,
+                    doChecked: 1,
                     ids: id,
                     _token: '{{ csrf_token() }}'
                 }).done(function(response) {
@@ -140,7 +176,7 @@
                 });
             } else {
                 $.post('{{ route("task.printing") }}', {
-                    doChecked: false,
+                    doChecked: 0,
                     ids: id,
                     _token: '{{ csrf_token() }}'
                 }).done(function(response) {
