@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class TaskController extends Controller
 {
@@ -101,5 +102,14 @@ class TaskController extends Controller
             ->where('delivered', 1)->delete();
 
         return response()->json($task);
+    }
+
+    public function filtered(Request $r)
+    {
+        $startDate = Carbon::createFromFormat('d/m/Y', $r->from)->startOfDay();
+        $endDate = Carbon::createFromFormat('d/m/Y', $r->to)->endOfDay();
+
+        //return view('filtered')->with('tasks', Task::whereBetween('created_at', [$from, $to])->get());
+        return view('filtered')->with('tasks', Task::whereBetween('created_at', [$startDate, $endDate])->get());
     }
 }

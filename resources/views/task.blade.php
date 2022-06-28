@@ -57,8 +57,8 @@
 
                         
                             <div class="row mb-5">
-                                @hasanyrole('admin|ctp')
                                     <div class="col-sm-6">
+                                    @hasanyrole('admin|ctp')
                                         <form action="{{ route('task.store') }}" method="POST">
                                             @csrf
 
@@ -72,11 +72,11 @@
                                                 </div>
                         
                                         </form>
+                                    @endhasanyrole
                                     </div>
-                                @endhasanyrole
 
                                 <div class="col-sm-6 text-end">
-                                    <button class="btn btn-sm btn-info">Custom Filter</button>
+                                    <button class="btn btn-sm btn-dark" id='customFilter'>Custom Filter</button>
                                 </div>
                             </div>
                         
@@ -96,7 +96,7 @@
                                 <tbody>
                                     @foreach ($tasks as $task)
                                         <tr>
-                                            <td>{!! date('d/m/y H:i A', strtotime($task->updated_at)) !!}</td>
+                                            <td>{!! date('d/m/Y H:i A', strtotime($task->created_at)) !!}</td>
                                             <td>
                                                 <p class="updateDo" data-ids="{{ $task->id }}">{{ $task->do_number }}</p>
                                             </td>
@@ -134,27 +134,29 @@
         </div>
     </div>
 
-<div class="modal fade" id="customFilter" tabindex="-1" aria-labelledby="customFilterLabel" aria-hidden="true">
+<div class="modal fade" id="modalCustomFilter" tabindex="-1" aria-labelledby="customFilterLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-    <form action="{{ route('task.custom.filter') }}" method="POST" id="customFilterForm">
+    <form action="{{ route('task.filtered') }}" method="POST" id="customFilterForm">
       <div class="modal-header">
-        <h5 class="modal-title" id="customFilterLabel">Update DO Number</h5>
+        <h5 class="modal-title" id="customFilterLabel">Filter Task by Date</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         
             @csrf
           <div class="mb-3">
-            <label for="do_number" class="col-form-label">DO: </label>
-            <input type="text" class="form-control" id="do_number" name="do_number" autocomplete="OFF">
-            <input type="hidden" name="task_id" id="task_id_for_do">
+            <label for="do_number" class="col-form-label">From: </label>
+            <input type="text" class="form-control dt" id="from" name="from" autocomplete="OFF">
+
+            <label for="do_number" class="col-form-label">To: </label>
+            <input type="text" class="form-control dt" id="to" name="to" autocomplete="OFF">
           </div>
         
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary">Go</button>
       </div>
       </form>   
     </div>
@@ -176,7 +178,7 @@
           <div class="mb-3">
             <label for="do_number" class="col-form-label">DO: </label>
             <input type="text" class="form-control" id="do_number" name="do_number" autocomplete="OFF">
-            <input type="hidden" name="task_id" id="task_id_for_do">
+            <input type="hidden" name="task_id" id="task_id_for_do" class="task_id_for_do">
           </div>
         
       </div>
@@ -226,7 +228,10 @@
                 order: [[0, 'desc']],
             });
 
-            
+            $('.dt').datetimepicker({
+                timepicker: false,
+                format: 'd/m/Y'
+            });
         });
 
         $(".printing").change(function() {
@@ -279,7 +284,7 @@
         if(role == 'ctp' || role == 'admin'){
             $('.updateDo').on('click', function(){
                 $('#modalUpdateDo').modal('show');
-                $('#task_id_for_do').val($(this).attr("data-ids"));
+                $('.task_id_for_do').val($(this).attr("data-ids"));
             });
 
             $('.updateCustomerName').on('click', function(){
@@ -287,6 +292,10 @@
                 $('#task_id_for_customer_name').val($(this).attr("data-ids"));
             });
         }
+
+        $('#customFilter').on('click', function(){
+            $('#modalCustomFilter').modal('show');
+        });
 
 
         // $('#doUpdateDo').addEventListener('shown.bs.modal', function(){

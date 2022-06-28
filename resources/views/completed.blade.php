@@ -58,7 +58,8 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#tasklist').DataTable({
-                responsive: true
+                responsive: true,
+                order: [[0, 'desc']],
             });
         });
 

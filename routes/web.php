@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::get('/task/completed', [TaskController::class, 'completed'])->name('task.completed');
+    Route::post('/task/filtered', [TaskController::class, 'filtered'])->name('task.filtered');
 });
 
 Route::get('cleanup', [TaskController::class, 'deleteMoreThan7Days']);
