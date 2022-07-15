@@ -32,7 +32,7 @@
                             </div>
                         @endif
 
-                        
+
                             <div class="row mb-5">
                                     <div class="col-sm-6">
                                     </div>
@@ -41,7 +41,7 @@
                                     <a href="/requests" class="btn btn-sm btn-danger">Back</a>
                                 </div>
                             </div>
-                        
+
 
                         <div class="table-responsive">
                             <table class="table table-sm table-strped table-bordered" id="tasklist">
@@ -62,18 +62,10 @@
                                                 {{ $r->title1 }}
                                             </td>
                                             <td>
-                                                @foreach($users as $user)
-                                                    @if($user->id == $r->requested_by)
-                                                        {{ $user->name }}
-                                                    @endif
-                                                @endforeach
+                                                {{ $r->requestedBy->name }}
                                             </td>
                                             <td>
-                                                @foreach($users as $user)
-                                                    @if($user->id == $r->approved_by)
-                                                        {{ $user->name }}
-                                                    @endif
-                                                @endforeach
+                                                {{ $r->approvedBy->name }}
                                             </td>
                                             <td>
                                                 <a href="view/{{$r->id}}" class="buttonView"><i class="fa fa-tv"></i></a>
@@ -101,7 +93,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        
+
             @csrf
           <div class="mb-3">
             <label for="do_number" class="col-form-label">From: </label>
@@ -110,13 +102,13 @@
             <label for="do_number" class="col-form-label">To: </label>
             <input type="text" class="form-control dt" id="to" name="to" autocomplete="OFF">
           </div>
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Go</button>
       </div>
-      </form>   
+      </form>
     </div>
   </div>
 </div>

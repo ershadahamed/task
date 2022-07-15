@@ -12,16 +12,8 @@ class RequestsController extends Controller
 {
     public function index()
     {
-        //return view('requests')->with('requests', Requests::where('approved_by', null)->get());
-        $requests = Requests::where('approved_by', null)->get();
-        // $users = User::all();
+        return view('requests')->with('requests', Requests::where('approved_by', null)->get());
 
-        // return view('requests',compact('requests', 'users'));
-
-        foreach($requests as $r){
-            dd($r->user());
-        }
-        
     }
 
     public function view()
@@ -36,18 +28,18 @@ class RequestsController extends Controller
 
     public function storeform(Request $r)
     {
-        
+
         $requests = Requests::create([
-            
+
             'type_of_request' => $r->type_of_request,
             'other_description' => $r->other_description,
-            
+
             'supplier' => $r->supplier,
             'price' => $r->price,
             'so_no' => $r->so_no,
             'requested_by' => Auth::user()->id,
             'approved_by' => null,
-            
+
             'title1' => $r->title1,
             'description1' => $r->description1,
             'quantity1' => $r->quantity1,
@@ -74,11 +66,7 @@ class RequestsController extends Controller
 
     public function approved ()
     {
-        //return view('requestsapproved')->with('requests', Requests::where('approved_by', !null)->get());
-        $requests = Requests::where('approved_by', !null)->get();
-        $users = User::all();
-
-        return view('requestsapproved',compact('requests', 'users'));
+        return view('requestsapproved')->with('requests', Requests::where('approved_by', !null)->get());
     }
 
     public function viewform ($id)
@@ -105,8 +93,7 @@ class RequestsController extends Controller
     public function exportPDF($id)
     {
         $requests = Requests::where('id', $id)->get();
-        $users = User::all();
-        $pdf = PDF::loadView('pdf', compact('requests', 'users'));
+        $pdf = PDF::loadView('pdf', compact('requests'));
         return $pdf->download('Request Form.pdf');
     }
 
@@ -120,11 +107,11 @@ class RequestsController extends Controller
         $requests = Requests::find($r->id);
         $requests->type_of_request = $r->type_of_request;
         $requests->other_description = $r->other_description;
-        
+
         $requests->supplier = $r->supplier;
         $requests->price = $r->price;
         $requests->so_no = $r->so_no;
-        
+
         $requests->title1 = $r->title1;
         $requests->description1 = $r->description1;
         $requests->quantity1 = $r->quantity1;

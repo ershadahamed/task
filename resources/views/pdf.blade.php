@@ -69,7 +69,7 @@
 <img class="GP-logo" src="{{ public_path("/images/GP_new_logo.png") }}" alt="">
 
 <div class="title fw-bold">RESOURCES REQUEST FORM<br>(RRF)</div>
-    
+
 @foreach($requests as $r)
 <div class="details">
     <span class="details-top"><span class="fw-bold">Date Request:</span> {!! date('d/m/Y H:i A', strtotime($r->created_at)) !!}</span>
@@ -129,7 +129,7 @@
 
 <div class="details-bottom">
     <span><span class="fw-bold">Price:</span> {{ $r->price }}</span>
-    <span class="right"><span class="fw-bold">Approved by:</span> @foreach($users as $user) @if($user->id == $r->approved_by) {{ $user->name }} @endif @endforeach</span>
+    <span class="right"><span class="fw-bold">Approved by:</span> {{ $r->approvedBy->name }}</span>
 </div>
 @endforeach
 
