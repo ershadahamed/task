@@ -7,6 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -38,22 +39,29 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        @hasanyrole('admin|ctp|logistic|view')
+                        @hasanyrole('admin|ctp|logistic|view|requestor|purchaser')
                             <li class="nav-item">
                                 <a href="{{ route('home') }}" class="nav-link">Home</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('task.index') }}" class="nav-link">Tasks</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('task.completed') }}" class="nav-link">Completed</a>
-                            </li>
-                            @role('admin')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endrole
                         @endhasanyrole
+
+                        @hasanyrole('admin|ctp|logistic|view')
+                            <li class="nav-item">
+                                <a href="{{ route('task.index') }}" class="nav-link">Namecard Status</a>
+                            </li>
+                        @endhasanyrole
+
+                        @hasanyrole('admin|requestor|purchaser')
+                        <li class="nav-item">
+                            <a href="{{ route('requests.index') }}" class="nav-link">Request Form</a>
+                        </li>
+                        @endhasanyrole
+                        
+                        @role('admin')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                        @endrole
                     </ul>
 
                     <!-- Right Side Of Navbar -->

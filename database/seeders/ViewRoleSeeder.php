@@ -18,6 +18,6 @@ class ViewRoleSeeder extends Seeder
     {
         $role_4 = Role::create(['name' => 'view']);
 
-        $role_4->givePermissionTo(['name' => 'create', 'name' => 'delete', 'name' => 'update', 'name' => 'read']);
+        $role_4->syncPermissions(['create', 'delete', 'update', 'read']);
     }
 }

@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Tasks | Completed</div>
+                    <div class="card-header">Sunway Namecard Status | Completed</div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -13,6 +13,12 @@
                                 {{ session('status') }}
                             </div>
                         @endif
+
+                        <div class="row mb-5">
+                            <div class="col-sm-12 text-end">
+                                <a href="{{ url()->previous() }}" class="btn btn-sm btn-danger">Back</a>
+                            </div>
+                        </div>
 
                         <div class="table-responsive">
                             <table class="table table-sm table-strped table-bordered" id="tasklist">
