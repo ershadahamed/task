@@ -25,16 +25,16 @@
                             </div>
                         @endif
 
-                        
+
                             <div class="row mb-5">
                                     <div class="col-sm-12 text-end">
                                         @foreach ($requests as $request)
-                                            @if(Auth::user()->id == $request->requested_by || Auth::user()->getRoleNames()[0] == 'admin')
-                                                @if($request->approved_by == null)
+                                            @if($request->approved_by == null)
+                                                @if(Auth::user()->id == $request->requested_by || Auth::user()->getRoleNames()[0] == 'admin')
                                                     <a href="/requests/edit/{{ $request->id }}" class="btn btn-sm btn-secondary">Edit</a>
-                                                @else
-                                                    <a href="/requests/pdf/{{ $request->id }}" class="btn btn-sm btn-info">PDF</a>
                                                 @endif
+                                            @else
+                                                <a href="/requests/pdf/{{ $request->id }}" class="btn btn-sm btn-info">PDF</a>
                                             @endif
                                         <a href="/requests" class="btn btn-sm btn-danger">Back</a>
                                     </div>
@@ -45,13 +45,13 @@
                                     <p><span class="fw-bold">Date Request:</span> {!! date('d/m/Y H:i A', strtotime($request->created_at)) !!}</p>
                                 </div>
                             </div>
-                            
+
                             <div class="row mb-4">
                                 <div class="col-md-12">
                                     <p><span class="fw-bold">Request For:</span> {{ $request->type_of_request }}@if($request->other_description != null) - {{ $request->other_description }}@endif</p>
                                 </div>
                             </div>
-                        
+
 
                         <div class="">
                             <table class="table text-center" id="requestlist">

@@ -28,6 +28,9 @@ class RequestsController extends Controller
 
     public function storeform(Request $r)
     {
+        $r->validate([
+            'title1' => 'required'
+        ]);
 
         $requests = Requests::create([
 
@@ -104,6 +107,10 @@ class RequestsController extends Controller
 
     public function updateform(Request $r)
     {
+        $r->validate([
+            'title1' => 'required'
+        ]);
+        
         $requests = Requests::find($r->id);
         $requests->type_of_request = $r->type_of_request;
         $requests->other_description = $r->other_description;
