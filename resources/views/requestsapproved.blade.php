@@ -57,7 +57,7 @@
                                 <tbody>
                                     @foreach ($requests as $r)
                                         <tr>
-                                            <td>{!! date('d/m/Y H:i A', strtotime($r->created_at)) !!}</td>
+                                            <td>{!! date('d/m/Y h:i A', strtotime($r->created_at)) !!}</td>
                                             <td>
                                                 {{ $r->title1 }}
                                             </td>
@@ -119,7 +119,7 @@
         $(document).ready(function() {
             $('#tasklist').DataTable({
                 responsive: true,
-                order: [[0, 'desc']],
+                order: [[1, 'desc']]
             });
 
             $('.dt').datetimepicker({
