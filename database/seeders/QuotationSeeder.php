@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class ViewRoleSeeder extends Seeder
+class QuotationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,8 +16,8 @@ class ViewRoleSeeder extends Seeder
      */
     public function run()
     {
-        $role_4 = Role::create(['name' => 'view']);
+        $role_reqForm1 = Role::create(['name' => 'costing']);
 
-        $role_4->syncPermissions(['create', 'delete', 'update', 'read']);
+        $role_reqForm1->syncPermissions(['create', 'delete', 'update', 'read']);
     }
 }

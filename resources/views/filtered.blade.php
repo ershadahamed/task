@@ -5,12 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Tasks | Filtered</div>
+                <div class="card-header">Sunway Namecard Status | Filtered</div>
 
                 <div class="card-body">
                     <div class="row mb-5">
                         <div class="col-sm-12 text-end">
-                            <a href="{{ route('task.index') }}" class="btn btn-sm btn-danger">Back</a>
+                            <a href="{{ url()->previous() }}" class="btn btn-sm btn-danger">Back</a>
                         </div>
                     </div>
                     <div class="row mt-4">

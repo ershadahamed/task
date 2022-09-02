@@ -36,7 +36,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Tasks</div>
+                    <div class="card-header">Sunway Namecard Status</div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -76,6 +76,7 @@
                                     </div>
 
                                 <div class="col-sm-6 text-end">
+                                    <a href="{{ route('task.completed') }}" class="btn btn-sm btn-info">Completed</a>
                                     <button class="btn btn-sm btn-dark" id='customFilter'>Custom Filter</button>
                                 </div>
                             </div>
