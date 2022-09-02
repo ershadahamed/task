@@ -57,7 +57,7 @@
                                 <tbody>
                                     @foreach ($requests as $r)
                                         <tr>
-                                            <td>{!! date('d/m/Y h:i A', strtotime($r->created_at)) !!}</td>
+                                            <td>{!! date('d/m/Y', strtotime($r->created_at)) !!}</td>
                                             <td>
                                                 {{ $r->title1 }}
                                             </td>
@@ -116,10 +116,33 @@
 
 @section('js')
     <script type="text/javascript">
+        jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+                "date-uk-pre": function ( a ) {
+                var ukDatea = a.split('/');
+                        return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+                },
+
+                "date-uk-asc": function ( a, b ) {
+                        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+                },
+
+                "date-uk-desc": function ( a, b ) {
+                        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+                }
+        });
+
+
         $(document).ready(function() {
             $('#tasklist').DataTable({
                 responsive: true,
-                order: [[1, 'desc']]
+                aoColumns: [
+                        { "sType": "date-uk" },
+                        null,
+                        null,
+                        null,
+                        null
+                ],
+                order: [[0, 'desc']],
             });
 
             $('.dt').datetimepicker({

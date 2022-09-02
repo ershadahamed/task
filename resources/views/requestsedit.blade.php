@@ -6,7 +6,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Request Form | New</div>
+                    <div class="card-header">Request Form | Edit</div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -73,24 +73,24 @@
                             var tor6 = document.getElementById('other');
 
                                 if (tor1.value=='{{ $request->type_of_request }}') {
-                                tor1.checked = true; 
+                                tor1.checked = true;
                                 }
                                 if (tor2.value=='{{ $request->type_of_request }}') {
-                                tor2.checked = true; 
+                                tor2.checked = true;
                                 }
                                 if (tor3.value=='{{ $request->type_of_request }}') {
-                                tor3.checked = true; 
+                                tor3.checked = true;
                                 }
                                 if (tor4.value=='{{ $request->type_of_request }}') {
-                                tor4.checked = true; 
+                                tor4.checked = true;
                                 }
                                 if (tor5.value=='{{ $request->type_of_request }}') {
-                                tor5.checked = true; 
+                                tor5.checked = true;
                                 }
                                 if (tor6.value=='{{ $request->type_of_request }}') {
                                 tor6.checked = true;
                                 }
-                            
+
                             </script>
 
                             <hr class="mb-5">
@@ -289,9 +289,9 @@
                             <input type="hidden" name="id" value="{{ $request->id }}">
                         </form>
                         @endforeach
-                        
 
-                        
+
+
                     </div>
                 </div>
             </div>

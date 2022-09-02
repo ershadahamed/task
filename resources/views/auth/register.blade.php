@@ -73,6 +73,7 @@
                                     <option value="view">View</option>
                                     <option value="requestor">Requestor</option>
                                     <option value="purchaser">Purchaser</option>
+                                    <option value="costing">Costing</option>
                                 </select>
                             </div>
                         </div>

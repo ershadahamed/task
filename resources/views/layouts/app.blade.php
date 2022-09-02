@@ -56,7 +56,13 @@
                             <a href="{{ route('requests.index') }}" class="nav-link">Request Form</a>
                         </li>
                         @endhasanyrole
-                        
+
+                        @hasanyrole('admin|costing|requestor')
+                        <li class="nav-item">
+                            <a href="{{ route('quotation.index') }}" class="nav-link">Quotation</a>
+                        </li>
+                        @endhasanyrole
+
                         @role('admin')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
